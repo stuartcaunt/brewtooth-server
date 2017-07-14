@@ -1,6 +1,8 @@
 package com.brewtooth.server.web.health;
 
-public class ServerHealthCheck extends com.codahale.metrics.health.HealthCheck {
+import com.codahale.metrics.health.HealthCheck;
+
+public class ServerHealthCheck extends HealthCheck {
 
 	@Override
 	protected Result check() throws Exception {
