@@ -1,6 +1,6 @@
-package com.brewtooth.web;
+package com.brewtooth.server.web;
 
-import com.brewtooth.web.health.ServerHealthCheck;
+import com.brewtooth.server.web.health.ServerHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;

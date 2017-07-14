@@ -1,4 +1,4 @@
-package com.brewtooth.web.health;
+package com.brewtooth.server.web.health;
 
 public class ServerHealthCheck extends com.codahale.metrics.health.HealthCheck {
 

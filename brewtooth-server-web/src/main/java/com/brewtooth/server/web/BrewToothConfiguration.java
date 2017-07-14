@@ -1,4 +1,4 @@
-package com.brewtooth.web;
+package com.brewtooth.server.web;
 
 import io.dropwizard.Configuration;
 
