@@ -2,6 +2,7 @@ package com.brewtooth.server.web.resources;
 
 import com.brewtooth.server.domain.Malt;
 import com.brewtooth.server.service.MaltService;
+import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ public class MaltResource {
 
 	@GET
 	@Path("/")
+	@Timed
 	@UnitOfWork
 	public Response doStaff() {
 		final List<Malt> malts = maltService.getAll();

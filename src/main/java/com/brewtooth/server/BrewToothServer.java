@@ -4,7 +4,6 @@ import com.brewtooth.server.domain.Malt;
 import com.brewtooth.server.health.ServerHealthCheck;
 import com.brewtooth.server.persistence.BrewToothHibernateBundle;
 import com.brewtooth.server.persistence.BrewToothHibernateModule;
-import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -12,6 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.vyarus.dropwizard.guice.GuiceBundle;
 
 public class BrewToothServer extends Application<BrewToothConfiguration> {
 
@@ -33,14 +33,13 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 		// register hbn bundle before guice to make sure factory initialized before guice context start
 		bootstrap.addBundle(hibernateBundle);
 
-		GuiceBundle<BrewToothConfiguration> guiceBundle = GuiceBundle.<BrewToothConfiguration>newBuilder()
+		GuiceBundle<BrewToothConfiguration> guiceBundle = GuiceBundle.<BrewToothConfiguration>builder()
 			.enableAutoConfig(
-				"com.brewtooth.server.dao",
+				"com.brewtooth.server.persistence.dao",
 				"com.brewtooth.server.service",
 				"com.brewtooth.server.web.resources"
 			)
-			.addModule(new BrewToothHibernateModule(hibernateBundle))
-			.setConfigClass(BrewToothConfiguration.class)
+			.modules(new BrewToothHibernateModule(hibernateBundle))
 			.build();
 
 		bootstrap.addBundle(guiceBundle);
