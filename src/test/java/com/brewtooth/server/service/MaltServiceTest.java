@@ -7,6 +7,7 @@ import com.brewtooth.server.persistence.BrewToothHibernateBundle;
 import com.brewtooth.server.persistence.BrewToothHibernateModule;
 import com.codahale.metrics.MetricRegistry;
 import com.google.inject.Inject;
+import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -16,7 +17,6 @@ import org.junit.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.vyarus.dropwizard.guice.GuiceBundle;
 
 import java.util.List;
 
@@ -38,13 +38,13 @@ public class MaltServiceTest {
 		// register hbn bundle before guice to make sure factory initialized before guice context start
 		//bootstrap.addBundle(hibernateBundle);
 
-		GuiceBundle<BrewToothConfiguration> guiceBundle = GuiceBundle.<BrewToothConfiguration>builder()
+		GuiceBundle<BrewToothConfiguration> guiceBundle = GuiceBundle.<BrewToothConfiguration>newBuilder()
 			.enableAutoConfig(
 				"com.brewtooth.server.dao",
 				"com.brewtooth.server.service",
 				"com.brewtooth.server.web.resources"
 			)
-			.modules(new BrewToothHibernateModule(hibernateBundle))
+			.addModule(new BrewToothHibernateModule(hibernateBundle))
 			.build();
 
 		//bootstrap.addBundle(guiceBundle);

@@ -21,28 +21,25 @@ public class BrewToothHibernateModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		// if hibernate bundle was registered before guice, then at this point it's run method
-		// will be already called and so its safe to get session factory instance
-		bind(SessionFactory.class).toInstance(this.hibernateBundle.getSessionFactory());
 	}
 
-//	@Provides
-//	public SessionFactory provideSessionFactory(BrewToothConfiguration configuration, Environment environment) {
-//
-//		SessionFactory sessionFactory = this.hibernateBundle.getSessionFactory();
-//		if (sessionFactory == null) {
-//			try {
-//				this.hibernateBundle.run(configuration, environment);
-//
-//				return this.hibernateBundle.getSessionFactory();
-//
-//			} catch (Exception e) {
-//				log.error("Unable to run BrewToothHibernateModule");
-//				return null;
-//			}
-//
-//		} else {
-//			return sessionFactory;
-//		}
-//	}
+	@Provides
+	public SessionFactory provideSessionFactory(BrewToothConfiguration configuration, Environment environment) {
+
+		SessionFactory sessionFactory = this.hibernateBundle.getSessionFactory();
+		if (sessionFactory == null) {
+			try {
+				this.hibernateBundle.run(configuration, environment);
+
+				return this.hibernateBundle.getSessionFactory();
+
+			} catch (Exception e) {
+				log.error("Unable to run BrewToothHibernateModule");
+				return null;
+			}
+
+		} else {
+			return sessionFactory;
+		}
+	}
 }
