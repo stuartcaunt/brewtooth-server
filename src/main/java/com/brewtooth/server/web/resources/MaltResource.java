@@ -3,8 +3,8 @@ package com.brewtooth.server.web.resources;
 import com.brewtooth.server.domain.Malt;
 import com.brewtooth.server.service.MaltService;
 import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
