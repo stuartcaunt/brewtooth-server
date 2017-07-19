@@ -23,9 +23,9 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 	private GuiceBundle<BrewToothConfiguration> guiceBundle;
 
 	public static void main(final String[] args) throws Exception {
-		for (int i = 0; i < args.length; i++) {
-			if (args[i].endsWith(".yml")) {
-				StartHelper.setConfigFilename(args[i]);
+		for (String arg : args) {
+			if (arg.endsWith(".yml")) {
+				StartHelper.setConfigFilename(arg);
 			}
 		}
 		new BrewToothServer().run(args);
@@ -34,7 +34,7 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 	@Override
 	public String getName() {
 		return "BrewTooth server";
-		}
+	}
 
 	@Override
 	public void initialize(final Bootstrap<BrewToothConfiguration> bootstrap) {
