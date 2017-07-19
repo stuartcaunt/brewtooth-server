@@ -46,12 +46,6 @@
 
 		<dependency>
 			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-hibernate</artifactId>
-			<version>${dropwizard.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-testing</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
@@ -61,6 +55,25 @@
 			<artifactId>dropwizard-guice</artifactId>
 			<version>${dropwizard.guice.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-multibindings</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-persist</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -74,7 +87,26 @@
 			<version>5.1.42</version>
 		</dependency>
 
-        <dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.2.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+
+		<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit-jupiter-api.version}</version>
@@ -86,18 +118,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-multibindings</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>

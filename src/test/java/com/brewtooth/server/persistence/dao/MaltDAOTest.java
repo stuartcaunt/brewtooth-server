@@ -2,7 +2,6 @@ package com.brewtooth.server.persistence.dao;
 
 import com.brewtooth.server.BrewToothConfiguration;
 import com.brewtooth.server.BrewToothServer;
-import com.brewtooth.server.persistence.PersistenceExtension;
 import com.brewtooth.server.service.MaltService;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;

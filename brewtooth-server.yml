@@ -10,7 +10,7 @@ server:
     port: 9001
 
 
-database:
+databaseConfiguration:
   driverClass: com.mysql.jdbc.Driver
   user: brewtooth
   password: brewtooth
@@ -19,6 +19,7 @@ database:
     charSet: UTF-8
     hibernate.dialect: org.hibernate.dialect.MySQLDialect
     hibernate.hbm2ddl.auto: create
+    hibernate.show_sql: false
     useSSL: false
 
 
