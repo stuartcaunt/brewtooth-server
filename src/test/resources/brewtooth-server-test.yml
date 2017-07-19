@@ -9,17 +9,13 @@ server:
   - type: http
     port: 9003
 
-
-database:
-  driverClass: com.mysql.jdbc.Driver
-  user: sa
-  password: sa
-  url: jdbc:h2:mem:brewtooth;
+databaseConfiguration:
+  url: jdbc:hsqldb:mem:testdb
   properties:
-    charSet: UTF-8
-    hibernate.dialect: org.hibernate.dialect.MySQLDialect
-    hibernate.hbm2ddl.auto: create
-    useSSL: false
+    hibernate.dialect : org.hibernate.dialect.HSQLDialect
+    hibernate.show_sql : true
+    hibernate.hbm2ddl.auto : update
+    hibernate.archive.autodetection: class, hbm
 
 
 # Logging settings.
@@ -28,7 +24,6 @@ logging:
   appenders:
     - type: console
       target: STDOUT
-#      logFormat: "[%date{ISO8601}] [%-10.-10thread] [%-5level] [%-70(%c{40}.%method:%line)] %msg%n"
       logFormat: "[%date{ISO8601}] [%-10.-10thread] [%-5level] [%-50(%c{50})] %msg%n"
       includeCallerData: true
   loggers:

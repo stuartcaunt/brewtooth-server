@@ -1,14 +1,12 @@
-package com.brewtooth.server.persistence.dao;
+package com.brewtooth.server.dao;
 
 
-import com.brewtooth.server.BrewToothServer;
 import com.google.inject.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;

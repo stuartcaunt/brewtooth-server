@@ -21,7 +21,6 @@ public class StartHelper {
 
     private static Injector injector = null;
     public static final String JPA_UNIT = "d1";
-    public static final String CONFIG_FILENAME_TEST = "src/test/resources/todo.yml";
     private static String configFilename;
 
     public static String getConfigFilename() {
@@ -41,7 +40,9 @@ public class StartHelper {
 
         for (String key : databaseConfiguration.getProperties().keySet()) {
         	String value = databaseConfiguration.getProperties().get(key);
-        	properties.setProperty(key, value);
+        	if (value != null) {
+				properties.setProperty(key, value);
+			}
         	log.debug("property \"" + key + "\" = " + value);
 		}
 
@@ -56,9 +57,6 @@ public class StartHelper {
         return injector;
     }
 
-    public static void init() {
-        init(CONFIG_FILENAME_TEST);
-    }
 
 	public static void init(String localConfigFilename) {
 		configFilename = localConfigFilename;

@@ -1,7 +1,7 @@
 package com.brewtooth.server.service;
 
 import com.brewtooth.server.domain.Malt;
-import com.brewtooth.server.persistence.dao.MaltDAO;
+import com.brewtooth.server.dao.MaltDAO;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
