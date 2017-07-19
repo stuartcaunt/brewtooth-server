@@ -33,6 +33,7 @@
         <guice.version>4.1.0</guice.version>
         <commons-lang3.version>3.5</commons-lang3.version>
 		<h2.version>1.4.195</h2.version>
+		<hibernate.version>5.2.1.Final</hibernate.version>
 	</properties>
 
 
@@ -91,13 +92,13 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.2.1.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.1.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>

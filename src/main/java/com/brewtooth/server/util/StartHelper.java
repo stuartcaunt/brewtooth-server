@@ -8,16 +8,16 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.configuration.YamlConfigurationFactory;
 import io.dropwizard.jackson.Jackson;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.Validation;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class StartHelper {
+
+	private static final Logger log = LoggerFactory.getLogger(StartHelper.class);
 
     private static Injector injector = null;
     public static final String JPA_UNIT = "d1";
@@ -35,26 +35,15 @@ public class StartHelper {
     public static Properties createPropertiesFromConfiguration(BrewToothConfiguration localConfiguration) {
 
 		BrewToothConfiguration.DatabaseConfiguration databaseConfiguration = localConfiguration.getDatabaseConfiguration();
-        List<String> propertiesList = new ArrayList();
-        propertiesList.add("charset");
-        propertiesList.add("useSSL");
-        propertiesList.add("hibernate.dialect");
-        propertiesList.add("hibernate.show_sql");
-        propertiesList.add("hibernate.hbm2ddl.auto");
-        propertiesList.add("hibernate.dialect");
-//        propertiesList.add("hibernate.connection.driver_class");
-//        propertiesList.add("hibernate.username");
-//        propertiesList.add("hibernate.password");
 
         Properties properties = new Properties();
         properties.setProperty("javax.persistence.jdbc.url", databaseConfiguration.getUrl());
 
-        for (String p : propertiesList) {
-            String val = databaseConfiguration.getProperties().get(p);
-            if (val != null) {
-                properties.setProperty(p, val);
-            }
-        }
+        for (String key : databaseConfiguration.getProperties().keySet()) {
+        	String value = databaseConfiguration.getProperties().get(key);
+        	properties.setProperty(key, value);
+        	log.debug("property \"" + key + "\" = " + value);
+		}
 
         return properties;
     }

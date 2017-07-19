@@ -1,6 +1,5 @@
 package com.brewtooth.server;
 
-import com.brewtooth.server.domain.Malt;
 import com.brewtooth.server.health.ServerHealthCheck;
 import com.brewtooth.server.util.StartHelper;
 import com.google.inject.persist.jpa.JpaPersistModule;
@@ -43,7 +42,10 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 
 		guiceBundle = GuiceBundle.<BrewToothConfiguration> newBuilder()
 //			.addModule(new ToDoGuiceModule())
-			.addModule(jpaPersistModule).enableAutoConfig("org.oregami")
+			.addModule(jpaPersistModule).enableAutoConfig(
+				"com.brewtooth.persistence",
+				"com.brewtooth.server",
+				"com.brewtooth.resources")
 			.setConfigClass(BrewToothConfiguration.class).build();
 
 		bootstrap.addBundle(guiceBundle);

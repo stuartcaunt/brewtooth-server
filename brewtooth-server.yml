@@ -11,16 +11,16 @@ server:
 
 
 databaseConfiguration:
-  driverClass: com.mysql.jdbc.Driver
-  user: brewtooth
-  password: brewtooth
   url: jdbc:mysql://localhost:3306/brewtooth
   properties:
     charSet: UTF-8
     hibernate.dialect: org.hibernate.dialect.MySQLDialect
     hibernate.hbm2ddl.auto: create
     hibernate.show_sql: false
-    useSSL: false
+    hibernate.connection.driver_class: com.mysql.jdbc.Driver
+    hibernate.connection.username: brewtooth
+    hibernate.connection.password: brewtooth
+    hibernate.connection.useSSL: false
 
 
 # Logging settings.
@@ -32,5 +32,5 @@ logging:
 #      logFormat: "[%date{ISO8601}] [%-10.-10thread] [%-5level] [%-70(%c{40}.%method:%line)] %msg%n"
       logFormat: "[%date{ISO8601}] [%-10.-10thread] [%-5level] [%-50(%c{50})] %msg%n"
       includeCallerData: true
-  loggers:
-    "org.hibernate.engine.internal": ERROR
+#  loggers:
+#    "org.hibernate.engine.internal": ERROR
