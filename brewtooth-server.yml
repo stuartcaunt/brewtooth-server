@@ -21,6 +21,9 @@ databaseConfiguration:
     hibernate.connection.username: brewtooth
     hibernate.connection.password: brewtooth
     hibernate.connection.useSSL: false
+    hibernate.connection.provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+    hibernate.hikari.minimumIdle: 1
+    hibernate.hikari.maximumPoolSize: 5
 
 
 # Logging settings.

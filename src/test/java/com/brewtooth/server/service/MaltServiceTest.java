@@ -1,43 +1,25 @@
 package com.brewtooth.server.service;
 
+import com.brewtooth.server.BrewToothConfiguration;
+import com.brewtooth.server.BrewToothServer;
+import com.brewtooth.server.PersistenceExtension;
 import com.brewtooth.server.domain.Malt;
-import com.brewtooth.server.util.DatabaseHelper;
-import com.brewtooth.server.util.StartHelper;
-import org.junit.*;
+import com.google.inject.Inject;
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit.DropwizardAppRule;
+import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
+@ExtendWith(PersistenceExtension.class)
 public class MaltServiceTest {
 
-	private EntityManager entityManager;
+	@Inject
 	private MaltService maltService;
-
-	@BeforeClass
-	public static void initClass() {
-		StartHelper.init("src/test/resources/brewtooth-server-test.yml");
-	}
-
-	@AfterClass
-	public static void finish() {
-		StartHelper.getInstance(DatabaseHelper.class).dropAllData();
-	}
-
-	@Before
-	public void startTx() {
-		if (entityManager==null) {
-			entityManager = StartHelper.getInstance(EntityManager.class);
-		}
-		entityManager.getTransaction().begin();
-
-		this.maltService = StartHelper.getInstance(MaltService.class);
-	}
-
-	@After
-	public void rollbackTx() {
-		entityManager.getTransaction().commit();
-	}
 
 	@Test
 	@DisplayName("Test Service")
