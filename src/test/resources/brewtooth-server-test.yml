@@ -14,19 +14,9 @@ databaseConfiguration:
   properties:
     hibernate.dialect : org.hibernate.dialect.HSQLDialect
     hibernate.show_sql : true
-    hibernate.hbm2ddl.auto : update
+    hibernate.hbm2ddl.auto : create
     hibernate.archive.autodetection: class, hbm
     hibernate.connection.provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
     hibernate.hikari.minimumIdle: 1
     hibernate.hikari.maximumPoolSize: 5
 
-# Logging settings.
-logging:
-  level: INFO
-  appenders:
-    - type: console
-      target: STDOUT
-      logFormat: "[%date{ISO8601}] [%-10.-10thread] [%-5level] [%-50(%c{50})] %msg%n"
-      includeCallerData: true
-  loggers:
-    org.hibernate.engine.internal: ERROR
