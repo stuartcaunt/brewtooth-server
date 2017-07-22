@@ -53,7 +53,7 @@ public abstract class GenericDAO<T> {
 	 * @param entity the Entity to persist
 	 * @return The persisted entity
 	 */
-	public T persist(T entity) {
+	public T insert(T entity) {
 		this.entityManagerProvider.get().persist(entity);
 
 		return entity;
@@ -64,7 +64,7 @@ public abstract class GenericDAO<T> {
 	 * @param entity The entity to merge
 	 * @return The merged entity
 	 */
-	public T merge(T entity) {
+	public T update(T entity) {
 		T merged = this.entityManagerProvider.get().merge(entity);
 		return merged;
 	}
@@ -75,7 +75,7 @@ public abstract class GenericDAO<T> {
 	 */
 	public void delete(T t) {
 		// First merge the entity to ensure it is not detached
-		T merged = this.merge(t);
+		T merged = this.update(t);
 
 		// Remove/delete the entity
 		this.entityManagerProvider.get().remove(merged);
