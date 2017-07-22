@@ -1,4 +1,4 @@
-package com.brewtooth.server.dao;
+package com.brewtooth.server.persistence;
 
 
 import com.google.inject.Provider;
@@ -169,9 +169,6 @@ public abstract class GenericDAO<T> {
 			if ((i < parameterNames.size() - 1)) {
 				queryString += " and";
 			}
-//			queryString += " (" + initial + "." + name +
-//				(value == null ? " is null)" : (" = :" + name + ")")) +
-//				((i < parameterNames.size() - 1) ? " and" : "");
 		}
 		queryString += " order by " + initial + ".id asc";
 

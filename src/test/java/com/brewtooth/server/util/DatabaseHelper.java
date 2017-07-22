@@ -5,9 +5,6 @@ import org.apache.log4j.Logger;
 
 import javax.persistence.EntityManager;
 
-/**
- * Class to fill the database with some sample entities.
- */
 public class DatabaseHelper {
 
 	Logger logger = Logger.getLogger(DatabaseHelper.class);

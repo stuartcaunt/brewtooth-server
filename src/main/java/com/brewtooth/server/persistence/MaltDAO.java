@@ -1,4 +1,4 @@
-package com.brewtooth.server.dao;
+package com.brewtooth.server.persistence;
 
 import com.brewtooth.server.domain.Malt;
 import com.google.inject.Inject;
