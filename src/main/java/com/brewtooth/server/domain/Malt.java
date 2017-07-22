@@ -1,11 +1,17 @@
 package com.brewtooth.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "malt")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Malt {
 
 	@Id
@@ -20,11 +26,11 @@ public class Malt {
 	@Enumerated(EnumType.STRING)
 	private GrainType grain;
 
-	@Column(name = "yield", nullable = false)
-	private float yield;
+	@Column(name = "yield", nullable = false, precision = 8, scale = 2)
+	private Double yield;
 
-	@Column(name = "ebc", nullable = false)
-	private float EBC;
+	@Column(name = "ebc", nullable = false, precision = 8, scale = 2)
+	private Double ebc;
 
 	@Column(name = "description", length = 10000)
 	private String description;
@@ -35,11 +41,11 @@ public class Malt {
 	public Malt() {
 	}
 
-	public Malt(String name, GrainType grain, float yield, float EBC) {
+	public Malt(String name, GrainType grain, Double yield, Double ebc) {
 		this.name = name;
 		this.grain = grain;
 		this.yield = yield;
-		this.EBC = EBC;
+		this.ebc = ebc;
 	}
 
 	public Long getId() {
@@ -58,19 +64,19 @@ public class Malt {
 		this.name = name;
 	}
 
-	public float getEBC() {
-		return EBC;
+	public Double getEbc() {
+		return ebc;
 	}
 
-	public void setEBC(float EBC) {
-		this.EBC = EBC;
+	public void setEbc(Double ebc) {
+		this.ebc = ebc;
 	}
 
-	public float getYield() {
+	public Double getYield() {
 		return yield;
 	}
 
-	public void setYield(float yield) {
+	public void setYield(Double yield) {
 		this.yield = yield;
 	}
 
@@ -96,5 +102,35 @@ public class Malt {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Malt malt = (Malt) o;
+
+		return new EqualsBuilder().append(name, malt.name).append(grain, malt.grain).append(yield, malt.yield).append(ebc, malt.ebc).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(name).append(grain).append(yield).append(ebc).toHashCode();
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("id", id).append("name", name).append("grain", grain).append("yield", yield).append("ebc", ebc).toString();
+	}
+
+	public void copyFrom(Malt malt) {
+		this.name = malt.name;
+		this.grain = malt.grain;
+		this.yield = malt.yield;
+		this.ebc = malt.ebc;
+		this.description = malt.description;
+		this.url = malt.url;
 	}
 }

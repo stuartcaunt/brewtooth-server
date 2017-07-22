@@ -1,11 +1,17 @@
 package com.brewtooth.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "hop")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Hop {
 
 	@Id
@@ -16,8 +22,8 @@ public class Hop {
 	@Column(name = "name", nullable = false, length = 1000)
 	private String name;
 
-	@Column(name = "alpha_acid", nullable = false)
-	private float alphaAcid;
+	@Column(name = "alpha_acid", nullable = false, precision = 8, scale = 2)
+	private Double alphaAcid;
 
 	@Column(name = "is_pellet", nullable = false)
 	private boolean isPellet;
@@ -44,11 +50,11 @@ public class Hop {
 		this.name = name;
 	}
 
-	public float getAlphaAcid() {
+	public Double getAlphaAcid() {
 		return alphaAcid;
 	}
 
-	public void setAlphaAcid(float alphaAcid) {
+	public void setAlphaAcid(Double alphaAcid) {
 		this.alphaAcid = alphaAcid;
 	}
 
@@ -74,5 +80,26 @@ public class Hop {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Hop hop = (Hop) o;
+
+		return new EqualsBuilder().append(name, hop.name).append(alphaAcid, hop.alphaAcid).append(isPellet, hop.isPellet).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(name).append(alphaAcid).append(isPellet).toHashCode();
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("id", id).append("name", name).append("alphaAcid", alphaAcid).append("isPellet", isPellet).toString();
 	}
 }

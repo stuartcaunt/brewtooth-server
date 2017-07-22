@@ -2,7 +2,7 @@ package com.brewtooth.server;
 
 import com.brewtooth.server.health.ServerHealthCheck;
 import com.brewtooth.server.util.StartHelper;
-import com.brewtooth.server.web.resources.MaltResource;
+import com.brewtooth.server.web.MaltEndpoint;
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.persist.jpa.JpaPersistModule;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -63,7 +63,7 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 		environment.servlets().addFilter("persistFilter", guiceBundle.getInjector().getInstance(PersistFilter.class)).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
 
 		// Register resources
-		environment.jersey().register(guiceBundle.getInjector().getInstance(MaltResource.class));
+		environment.jersey().register(guiceBundle.getInjector().getInstance(MaltEndpoint.class));
 
 		// Health checks
 		environment.healthChecks().register("base", new ServerHealthCheck());

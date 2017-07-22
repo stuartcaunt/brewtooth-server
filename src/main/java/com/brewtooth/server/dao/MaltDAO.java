@@ -16,6 +16,6 @@ public class MaltDAO extends GenericDAO<Malt> {
 	}
 
 	public Malt getByMaltDetails(Malt malt) {
-		return this.getFirstEntity(Arrays.asList("name", "grain", "yield", "EBC"), malt.getName(), malt.getGrain(), malt.getYield(), malt.getEBC());
+		return this.getFirstEntity(Arrays.asList("name", "grain", "yield"), malt.getName(), malt.getGrain(), malt.getYield());
 	}
 }

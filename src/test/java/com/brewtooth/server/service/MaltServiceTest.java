@@ -30,7 +30,7 @@ public class MaltServiceTest {
 	@Test
 	@DisplayName("Test create and retrieve")
 	public void createAndRetrieve() {
-		Malt malt = new Malt("malt1", GrainType.BARLEY, 0.7f, 3.0f);
+		Malt malt = new Malt("malt1", GrainType.BARLEY, 0.7, 3.0);
 		maltService.save(malt);
 
 		Assert.assertNotNull(malt.getId());
@@ -42,15 +42,15 @@ public class MaltServiceTest {
 
 		Assert.assertEquals("malt1", result.getName());
 		Assert.assertEquals(GrainType.BARLEY, result.getGrain());
-		Assert.assertEquals(0.7f, result.getYield(), 0.001f);
-		Assert.assertEquals(3.0f, result.getEBC(), 0.001f);
+		Assert.assertEquals(0.7, result.getYield(), 0.001);
+		Assert.assertEquals(3.0, result.getEbc(), 0.001);
 	}
 
 	@Test
 	@DisplayName("Test no duplicates")
 	public void testSingleCreation() {
-		Malt malt1a = new Malt("malt1", GrainType.BARLEY, 0.7f, 3.0f);
-		Malt malt1b = new Malt("malt1", GrainType.BARLEY, 0.7f, 3.0f);
+		Malt malt1a = new Malt("malt1", GrainType.BARLEY, 0.7, 3.0);
+		Malt malt1b = new Malt("malt1", GrainType.BARLEY, 0.7, 3.0);
 
 		malt1a = maltService.save(malt1a);
 

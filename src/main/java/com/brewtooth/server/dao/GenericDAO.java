@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class GenericDAO<T> {
 
 	private static final Logger log = LoggerFactory.getLogger(GenericDAO.class);
+	private static String EPSILON = "0.0001";
 
 	private Class classType;
 
@@ -154,9 +155,23 @@ public abstract class GenericDAO<T> {
 			String name = parameterNames.get(i);
 			Object value = parameters[i];
 
-			queryString += " (" + initial + "." + name +
-					(value == null ? " is null)" : (" = :" + name + ")")) +
-					((i < parameterNames.size() - 1) ? " and" : "");
+			queryString += " (" + initial + "." + name;
+			if (value == null) {
+				queryString += " is null)";
+
+			} else if (value instanceof Float || value instanceof Double) {
+				queryString += " > :" + name + " - "  + EPSILON + ") and (" + initial + "." + name +" < :" + name + " + " + EPSILON + ")";
+
+			} else {
+				queryString += " = :" + name + ")";
+			}
+
+			if ((i < parameterNames.size() - 1)) {
+				queryString += " and";
+			}
+//			queryString += " (" + initial + "." + name +
+//				(value == null ? " is null)" : (" = :" + name + ")")) +
+//				((i < parameterNames.size() - 1) ? " and" : "");
 		}
 		queryString += " order by " + initial + ".id asc";
 

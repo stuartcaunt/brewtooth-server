@@ -1,11 +1,17 @@
 package com.brewtooth.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "yeast")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Yeast {
 
 	@Id
@@ -16,8 +22,8 @@ public class Yeast {
 	@Column(name = "name", nullable = false, length = 1000)
 	private String name;
 
-	@Column(name = "attenuation", nullable = false)
-	private float attenuation;
+	@Column(name = "attenuation", nullable = false, precision = 8, scale = 2)
+	private Double attenuation;
 
 	@Column(name = "description", length = 10000)
 	private String description;
@@ -41,11 +47,11 @@ public class Yeast {
 		this.name = name;
 	}
 
-	public float getAttenuation() {
+	public Double getAttenuation() {
 		return attenuation;
 	}
 
-	public void setAttenuation(float attenuation) {
+	public void setAttenuation(Double attenuation) {
 		this.attenuation = attenuation;
 	}
 
@@ -63,5 +69,26 @@ public class Yeast {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Yeast yeast = (Yeast) o;
+
+		return new EqualsBuilder().append(name, yeast.name).append(attenuation, yeast.attenuation).isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(name).append(attenuation).toHashCode();
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append("id", id).append("name", name).append("attenuation", attenuation).toString();
 	}
 }
