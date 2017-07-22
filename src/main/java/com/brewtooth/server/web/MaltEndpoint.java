@@ -50,6 +50,25 @@ public class MaltEndpoint {
 	}
 
 	/**
+	 * Returns a single malt from the DB
+	 * @return The malt to return
+	 */
+	@GET
+	@Path("/{id}")
+	@Produces("application/json")
+	@Timed
+	public Response get(@PathParam("id") Long id) {
+		log.info("Getting malt with Id : " + id);
+		Malt malt = this.maltService.getById(id);
+		if (malt != null) {
+			return Response.ok(malt).build();
+
+		} else {
+			return RestError.buildResponse(Response.Status.NOT_FOUND, "The malt with Id " + id + " does not exist");
+		}
+	}
+
+	/**
 	 * Update a malt in the database
 	 * @param malt The malt to updte
 	 * @return the persisted malt
@@ -59,7 +78,7 @@ public class MaltEndpoint {
 	@Produces("application/json")
 	@Consumes("application/json")
 	@Timed
-	public Response create(@PathParam("id") Long id, Malt malt) {
+	public Response update(@PathParam("id") Long id, Malt malt) {
 		log.info("Updating malt : " + malt);
 		if (malt.getId() != null && malt.getId().equals(id)) {
 			Malt integratedMalt = this.maltService.update(malt);
