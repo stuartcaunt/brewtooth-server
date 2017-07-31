@@ -1,0 +1,6 @@
+
+- Modify hop mapping to allow for multiple alphaAcid values
+  - just use simple json format rather than create a new table
+- Allow for multiple URLs
+  - json format
+
