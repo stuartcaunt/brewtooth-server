@@ -102,4 +102,12 @@ public class Hop {
 	public String toString() {
 		return new ToStringBuilder(this).append("id", id).append("name", name).append("alphaAcid", alphaAcid).append("isPellet", isPellet).toString();
 	}
+
+	public void copyFrom(Hop hop) {
+		this.name = hop.name;
+		this.alphaAcid = hop.alphaAcid;
+		this.isPellet = hop.isPellet;
+		this.description = hop.description;
+		this.url = hop.url;
+	}
 }

@@ -62,25 +62,6 @@ public class MaltService {
 	}
 
 	/**
-	 * Updates a malt
-	 * @param malt The malt to update
-	 * @return The integrated malt
-	 */
-	public Malt update(Malt malt) {
-		Malt integratedMalt = this.getById(malt.getId());
-
-		// Check if it is a new object
-		if (integratedMalt != null) {
-			integratedMalt.copyFrom(malt);
-
-			this.save(integratedMalt);
-		}
-
-		return integratedMalt;
-	}
-
-
-	/**
 	 * Return all malts
 	 * @return A list of all malts
 	 */

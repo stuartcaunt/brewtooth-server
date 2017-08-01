@@ -70,7 +70,7 @@ public class MaltEndpoint {
 
 	/**
 	 * Update a malt in the database
-	 * @param malt The malt to updte
+	 * @param malt The malt to update
 	 * @return the persisted malt
 	 */
 	@PUT
@@ -81,7 +81,7 @@ public class MaltEndpoint {
 	public Response update(@PathParam("id") Long id, Malt malt) {
 		log.info("Updating malt : " + malt);
 		if (malt.getId() != null && malt.getId().equals(id)) {
-			Malt integratedMalt = this.maltService.update(malt);
+			Malt integratedMalt = this.maltService.save(malt);
 
 			if (integratedMalt != null) {
 				return Response.ok(integratedMalt).build();
