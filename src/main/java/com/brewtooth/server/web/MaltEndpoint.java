@@ -69,6 +69,25 @@ public class MaltEndpoint {
 	}
 
 	/**
+	 * Deletes a malt from the DB
+	 */
+	@DELETE
+	@Path("/{id}")
+	@Produces("application/json")
+	@Timed
+	public Response delete(@PathParam("id") Long id) {
+		log.info("Deleting malt with Id : " + id);
+		Malt malt = this.maltService.getById(id);
+		if (malt != null) {
+			this.maltService.delete(malt);
+			return Response.ok().build();
+
+		} else {
+			return RestError.buildResponse(Response.Status.NOT_FOUND, "The malt with Id " + id + " does not exist");
+		}
+	}
+
+	/**
 	 * Update a malt in the database
 	 * @param malt The malt to update
 	 * @return the persisted malt

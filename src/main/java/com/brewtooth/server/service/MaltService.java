@@ -68,4 +68,14 @@ public class MaltService {
 	public List<Malt> getAll() {
 		return this.maltDAO.getAll();
 	}
+
+	/**
+	 * Deletes a malt
+	 * @param malt the malt to delete
+	 */
+	@Transactional
+	public void delete(Malt malt) {
+		this.maltDAO.delete(malt);
+	}
+
 }
