@@ -58,11 +58,11 @@ public class Hop {
 		this.alphaAcid = alphaAcid;
 	}
 
-	public boolean isPellet() {
+	public boolean getIsPellet() {
 		return isPellet;
 	}
 
-	public void setPellet(boolean pellet) {
+	public void setIsPellet(boolean pellet) {
 		isPellet = pellet;
 	}
 

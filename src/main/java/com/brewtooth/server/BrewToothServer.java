@@ -2,6 +2,7 @@ package com.brewtooth.server;
 
 import com.brewtooth.server.health.ServerHealthCheck;
 import com.brewtooth.server.util.StartHelper;
+import com.brewtooth.server.web.HopEndpoint;
 import com.brewtooth.server.web.MaltEndpoint;
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.persist.jpa.JpaPersistModule;
@@ -78,6 +79,7 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 
 		// Register resources
 		environment.jersey().register(guiceBundle.getInjector().getInstance(MaltEndpoint.class));
+		environment.jersey().register(guiceBundle.getInjector().getInstance(HopEndpoint.class));
 
 		// Health checks
 		environment.healthChecks().register("base", new ServerHealthCheck());

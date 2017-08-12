@@ -17,7 +17,7 @@ public class HopDAO extends GenericDAO<Hop>{
 	}
 
 	public Hop getByHopDetails(Hop hop) {
-		return this.getFirstEntity(Arrays.asList("name", "alphaAcid", "isPellet"), hop.getName(), hop.getAlphaAcid(), hop.isPellet());
+		return this.getFirstEntity(Arrays.asList("name", "alphaAcid", "isPellet"), hop.getName(), hop.getAlphaAcid(), hop.getIsPellet());
 	}
 
 
