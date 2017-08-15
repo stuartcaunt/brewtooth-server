@@ -7,12 +7,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "hop")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Hop {
+public class Hop implements Ingredient {
 
 	@Id
 	@Column(name = "id", nullable = false)
@@ -83,6 +87,16 @@ public class Hop {
 	}
 
 	@Override
+	public Map<String, Object> getDetails() {
+		Map<String, Object> details = new LinkedHashMap<>();
+		details.put("name", this.name);
+		details.put("alphaAcid", this.alphaAcid);
+		details.put("isPellet", this.isPellet);
+
+		return details;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 
@@ -101,13 +115,5 @@ public class Hop {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("id", id).append("name", name).append("alphaAcid", alphaAcid).append("isPellet", isPellet).toString();
-	}
-
-	public void copyFrom(Hop hop) {
-		this.name = hop.name;
-		this.alphaAcid = hop.alphaAcid;
-		this.isPellet = hop.isPellet;
-		this.description = hop.description;
-		this.url = hop.url;
 	}
 }

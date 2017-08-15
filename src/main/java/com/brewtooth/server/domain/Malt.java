@@ -7,12 +7,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "malt")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Malt {
+public class Malt implements Ingredient {
 
 	@Id
 	@Column(name = "id", nullable = false)
@@ -105,6 +109,16 @@ public class Malt {
 	}
 
 	@Override
+	public Map<String, Object> getDetails() {
+		Map<String, Object> details = new LinkedHashMap<>();
+		details.put("name", this.name);
+		details.put("grain", this.grain);
+		details.put("yield", this.yield);
+
+		return details;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 
@@ -123,14 +137,5 @@ public class Malt {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this).append("id", id).append("name", name).append("grain", grain).append("yield", yield).append("ebc", ebc).toString();
-	}
-
-	public void copyFrom(Malt malt) {
-		this.name = malt.name;
-		this.grain = malt.grain;
-		this.yield = malt.yield;
-		this.ebc = malt.ebc;
-		this.description = malt.description;
-		this.url = malt.url;
 	}
 }

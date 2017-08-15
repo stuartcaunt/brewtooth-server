@@ -7,17 +7,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "yeast")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Yeast {
+public class Yeast implements Ingredient {
 
 	@Id
 	@Column(name = "id", nullable = false)
 	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
+
+	@Column(name = "manufacturer", nullable = false, length = 1000)
+	private String manufacturer;
 
 	@Column(name = "name", nullable = false, length = 1000)
 	private String name;
@@ -47,6 +54,14 @@ public class Yeast {
 		this.name = name;
 	}
 
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
 	public Double getAttenuation() {
 		return attenuation;
 	}
@@ -69,6 +84,15 @@ public class Yeast {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Override
+	public Map<String, Object> getDetails() {
+		Map<String, Object> details = new LinkedHashMap<>();
+		details.put("name", this.name);
+		details.put("manufacturer", this.manufacturer);
+
+		return details;
 	}
 
 	@Override

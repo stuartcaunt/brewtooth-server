@@ -46,7 +46,7 @@ public class HopService {
 		// Check if it is a new object
 		if(hop.getId() == null) {
 			// Determine if the object already exists
-			integratedHop = this.hopDAO.getByHopDetails(hop);
+			integratedHop = this.hopDAO.getByDetails(hop);
 			if (integratedHop != null) {
 				log.debug("hop " + hop.getName() + " already present in the db under the id " + integratedHop.getId());
 
@@ -67,5 +67,14 @@ public class HopService {
 	 */
 	public List<Hop> getAll() {
 		return this.hopDAO.getAll();
+	}
+
+	/**
+	 * Deletes a hop
+	 * @param hop the hop to delete
+	 */
+	@Transactional
+	public void delete(Hop hop) {
+		this.hopDAO.delete(hop);
 	}
 }

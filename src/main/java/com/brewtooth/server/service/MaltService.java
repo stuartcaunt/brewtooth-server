@@ -45,7 +45,7 @@ public class MaltService {
 		// Check if it is a new object
 		if (malt.getId() == null) {
 			// Determine if the object already exists
-			integratedMalt = this.maltDAO.getByMaltDetails(malt);
+			integratedMalt = this.maltDAO.getByDetails(malt);
 			if (integratedMalt != null) {
 				log.debug("malt " + malt.getName() + " already present in the db under the id " + integratedMalt.getId());
 

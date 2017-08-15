@@ -9,8 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public abstract class GenericDAO<T> {
 
@@ -89,7 +88,10 @@ public abstract class GenericDAO<T> {
 	 * @return The retrieved entity
 	 */
 	protected <T> T getFirstEntity(String parameterName, Object parameterValue) {
-		return this.getFirstEntity(Arrays.asList(parameterName), parameterValue);
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put(parameterName, parameterValue);
+
+		return this.getFirstEntity(parameterMap);
 	}
 
 	/**
@@ -99,8 +101,22 @@ public abstract class GenericDAO<T> {
 	 * @return The retrieved entity
 	 */
 	protected <T> T getFirstEntity(List<String> parameterNames, Object ... parameters) {
+		Map<String, Object> parameterMap = new LinkedHashMap<>();
+		for (int i = 0; i < parameterNames.size(); i++) {
+			parameterMap.put(parameterNames.get(i), parameters[i]);
+		}
+
+		return this.getFirstEntity(parameterMap);
+	}
+
+	/**
+	 * Returns the first entity matching the given search parameters
+	 * @param parameters The parameters
+	 * @return The retrieved entity
+	 */
+	protected <T> T getFirstEntity(Map<String, Object> parameters) {
 		try {
-			TypedQuery<T> query = this.getTypedQuery(parameterNames, parameters);
+			TypedQuery<T> query = this.getTypedQuery(parameters);
 
 			// Single result
 			query.setMaxResults(1);
@@ -119,7 +135,10 @@ public abstract class GenericDAO<T> {
 	 * @return The list of retrieved entities
 	 */
 	protected <T> List<T> getEntities(String parameterName, Object parameterValue) {
-		return this.getEntities(Arrays.asList(parameterName), parameterValue);
+		Map<String, Object> parameterMap = new HashMap<>();
+		parameterMap.put(parameterName, parameterValue);
+
+		return this.getEntities(parameterMap);
 	}
 
 	/**
@@ -129,8 +148,22 @@ public abstract class GenericDAO<T> {
 	 * @return The list of retrieved entities
 	 */
 	protected <T> List<T> getEntities(List<String> parameterNames, Object ... parameters) {
+		Map<String, Object> parameterMap = new LinkedHashMap<>();
+		for (int i = 0; i < parameterNames.size(); i++) {
+			parameterMap.put(parameterNames.get(i), parameters[i]);
+		}
+
+		return this.getEntities(parameterMap);
+	}
+
+	/**
+	 * Returns all entities matching the given search parameters
+	 * @param parameters The parameters
+	 * @return The list of retrieved entities
+	 */
+	protected <T> List<T> getEntities(Map<String, Object> parameters) {
 		try {
-			TypedQuery<T> query = this.getTypedQuery(parameterNames, parameters);
+			TypedQuery<T> query = this.getTypedQuery(parameters);
 
 			return query.getResultList();
 
@@ -140,20 +173,20 @@ public abstract class GenericDAO<T> {
 	}
 
 	/**
-	 * Generic function to obtain a TypedQuery from a given list of parameters
-	 * @param parameterNames The parameter names
-	 * @param parameters The parameter values
+	 * Generic function to obtain a TypedQuery from a given map of parameters
+	 * @param parameters The parameters
 	 * @return The TypedQuery
 	 */
-	private <T> TypedQuery<T> getTypedQuery(List<String> parameterNames, Object ... parameters) {
+	private <T> TypedQuery<T> getTypedQuery(Map<String, Object> parameters) {
 		String className = classType.getSimpleName();
 		String initial = className.toLowerCase().substring(0, 1);
 
 		// Build up query string from parameters
 		String queryString = "select " + initial + " from " + className + " " + initial + " where";
+		List<String> parameterNames = new ArrayList<>(parameters.keySet());
 		for (int i = 0; i < parameterNames.size(); i++) {
 			String name = parameterNames.get(i);
-			Object value = parameters[i];
+			Object value = parameters.get(name);
 
 			queryString += " (" + initial + "." + name;
 			if (value == null) {
@@ -178,9 +211,8 @@ public abstract class GenericDAO<T> {
 		TypedQuery<T> query = entityManagerProvider.get().createQuery(queryString, classType);
 
 		// Set the query parameters
-		for (int i = 0; i < parameterNames.size(); i++) {
-			String name = parameterNames.get(i);
-			Object value = parameters[i];
+		for (String name : parameters.keySet()) {
+			Object value = parameters.get(name);
 
 			if (value != null) {
 				query.setParameter(name, value);

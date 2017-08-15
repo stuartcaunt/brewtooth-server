@@ -1,7 +1,7 @@
 package com.brewtooth.server.web;
 
 import com.brewtooth.server.domain.Hop;
-import com.brewtooth.server.domain.Malt;
+import com.brewtooth.server.domain.Hop;
 import com.brewtooth.server.service.HopService;
 import com.brewtooth.server.web.error.RestError;
 import com.codahale.metrics.annotation.Timed;
@@ -69,6 +69,24 @@ public class HopEndpoint {
 		}
 	}
 
+	/**
+	 * Deletes a hop from the DB
+	 */
+	@DELETE
+	@Path("/{id}")
+	@Produces("application/json")
+	@Timed
+	public Response delete(@PathParam("id") Long id) {
+		log.info("Deleting hop with Id : " + id);
+		Hop hop = this.hopService.getById(id);
+		if (hop != null) {
+			this.hopService.delete(hop);
+			return Response.ok().build();
+
+		} else {
+			return RestError.buildResponse(Response.Status.NOT_FOUND, "The hop with Id " + id + " does not exist");
+		}
+	}
 	/**
 	 * Update a hop in the database
 	 * @param hop The hop to update
