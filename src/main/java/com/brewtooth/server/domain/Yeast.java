@@ -111,6 +111,6 @@ public class Yeast implements Ingredient {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("id", id).append("name", name).append("attenuation", attenuation).toString();
+		return new ToStringBuilder(this).append("id", id).append("manufacturer", manufacturer).append("name", name).append("attenuation", attenuation).toString();
 	}
 }
