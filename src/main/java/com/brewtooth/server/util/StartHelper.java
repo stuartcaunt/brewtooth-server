@@ -1,6 +1,7 @@
 package com.brewtooth.server.util;
 
 import com.brewtooth.server.BrewToothConfiguration;
+import com.brewtooth.server.BrewtoothModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.persist.PersistService;
@@ -64,7 +65,7 @@ public class StartHelper {
 		Properties properties = createPropertiesFromConfiguration(configuration);
 		JpaPersistModule jpaPersistModule = new JpaPersistModule(JPA_UNIT);
 		jpaPersistModule.properties(properties);
-		injector = Guice.createInjector(jpaPersistModule /*, new ToDoGuiceModule() */);
+		injector = Guice.createInjector(jpaPersistModule, new BrewtoothModule());
 		injector.getInstance(PersistService.class).start();
 	}
 

@@ -16,8 +16,7 @@ public abstract class GenericDAO<T> {
 	private static final Logger log = LoggerFactory.getLogger(GenericDAO.class);
 	private static String EPSILON = "0.0001";
 
-	private Class classType;
-
+	protected Class classType;
 	protected Provider<EntityManager> entityManagerProvider;
 
 	@SuppressWarnings("unchecked")

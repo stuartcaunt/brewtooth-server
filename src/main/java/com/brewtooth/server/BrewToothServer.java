@@ -4,6 +4,7 @@ import com.brewtooth.server.health.ServerHealthCheck;
 import com.brewtooth.server.util.StartHelper;
 import com.brewtooth.server.web.HopEndpoint;
 import com.brewtooth.server.web.MaltEndpoint;
+import com.brewtooth.server.web.YeastEndpoint;
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.persist.jpa.JpaPersistModule;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -47,8 +48,11 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 		JpaPersistModule jpaPersistModule = new JpaPersistModule(StartHelper.JPA_UNIT);
 		jpaPersistModule.properties(jpaProperties);
 
+		BrewtoothModule brewtoothModule = new BrewtoothModule();
+
 		guiceBundle = GuiceBundle.<BrewToothConfiguration> newBuilder()
 			.addModule(jpaPersistModule)
+			.addModule(brewtoothModule)
 			.enableAutoConfig(
 				"com.brewtooth.persistence",
 				"com.brewtooth.server",
@@ -80,6 +84,7 @@ public class BrewToothServer extends Application<BrewToothConfiguration> {
 		// Register resources
 		environment.jersey().register(guiceBundle.getInjector().getInstance(MaltEndpoint.class));
 		environment.jersey().register(guiceBundle.getInjector().getInstance(HopEndpoint.class));
+		environment.jersey().register(guiceBundle.getInjector().getInstance(YeastEndpoint.class));
 
 		// Health checks
 		environment.healthChecks().register("base", new ServerHealthCheck());
