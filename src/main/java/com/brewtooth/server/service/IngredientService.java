@@ -13,12 +13,15 @@ public abstract class IngredientService<T extends Ingredient> {
 	private static final Logger log = LoggerFactory.getLogger(IngredientService.class);
 
 	private IngredientDAO<T> dao;
-
 	private Class classType;
 
 	public IngredientService(final IngredientDAO<T> dao) {
 		this.dao = dao;
-		this.classType = dao.getGenericClass();
+		this.classType = dao.getEntityClass();
+	}
+
+	public Class getEntityClass() {
+		return this.classType;
 	}
 
 	/**

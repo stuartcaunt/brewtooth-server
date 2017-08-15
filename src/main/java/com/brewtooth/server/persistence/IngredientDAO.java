@@ -14,8 +14,4 @@ public abstract class IngredientDAO<T extends Ingredient> extends GenericDAO<T> 
 	public T getByDetails(T type) {
 		return this.getFirstEntity(type.getDetails());
 	}
-
-	public Class getGenericClass() {
-		return this.classType;
-	}
 }

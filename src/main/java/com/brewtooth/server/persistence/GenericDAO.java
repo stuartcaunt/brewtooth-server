@@ -16,13 +16,17 @@ public abstract class GenericDAO<T> {
 	private static final Logger log = LoggerFactory.getLogger(GenericDAO.class);
 	private static String EPSILON = "0.0001";
 
-	protected Class classType;
+	protected Class entityClass;
 	protected Provider<EntityManager> entityManagerProvider;
 
 	@SuppressWarnings("unchecked")
 	public GenericDAO(Provider<EntityManager> entityManagerProvider) {
 		this.entityManagerProvider = entityManagerProvider;
-		this.classType  = (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.entityClass = (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+
+	public Class getEntityClass() {
+		return this.entityClass;
 	}
 
 	/**
@@ -30,11 +34,11 @@ public abstract class GenericDAO<T> {
 	 * @return All entities
 	 */
 	public List<T> getAll() {
-		String className = classType.getSimpleName();
+		String className = entityClass.getSimpleName();
 		String initial = className.toLowerCase().substring(0, 1);
 		String queryString = "select " + initial + " from " + className + " " + initial;
 
-		TypedQuery<T> query = entityManagerProvider.get().createQuery(queryString, classType);
+		TypedQuery<T> query = entityManagerProvider.get().createQuery(queryString, entityClass);
 		return query.getResultList();
 	}
 
@@ -177,7 +181,7 @@ public abstract class GenericDAO<T> {
 	 * @return The TypedQuery
 	 */
 	private <T> TypedQuery<T> getTypedQuery(Map<String, Object> parameters) {
-		String className = classType.getSimpleName();
+		String className = entityClass.getSimpleName();
 		String initial = className.toLowerCase().substring(0, 1);
 
 		// Build up query string from parameters
@@ -207,7 +211,7 @@ public abstract class GenericDAO<T> {
 		log.debug(queryString);
 
 		// Generate the query
-		TypedQuery<T> query = entityManagerProvider.get().createQuery(queryString, classType);
+		TypedQuery<T> query = entityManagerProvider.get().createQuery(queryString, entityClass);
 
 		// Set the query parameters
 		for (String name : parameters.keySet()) {
